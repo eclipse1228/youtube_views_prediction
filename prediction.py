@@ -1,6 +1,18 @@
 import numpy as np
 import joblib
 from sklearn.feature_extraction.text import TfidfVectorizer
+import os 
+import configparser
+import boto3
+
+# config
+config = configparser.ConfigParser()
+config.read('config.config')
+# AWS env
+client = boto3.client('rekognition')
+os.environ['AWS_ACCESS_KEY_ID'] = config['DEFAULT']['AWS_ACCESS_KEY_ID']
+os.environ['AWS_SECRET_ACCESS_KEY'] = config['DEFAULT']['AWS_SECRET_ACCESS_KEY']
+os.environ['AWS_DEFAULT_REGION'] = config['DEFAULT']['AWS_DEFAULT_REGION']
 
 def predict_views_for_new_thumbnail(model_filename, vectorizer_filename, new_thumbnail):
     """
